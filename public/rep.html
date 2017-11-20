@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>For the People - Representative Bio</title>
+	<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+	<style> #photo { width: 100%; height: auto; } .vote{ border: 2px solid black; padding: 10px; margin: 5px;} #photo {margin: 5px; } p.bill:hover {color: blue;}</style>
+</head>
+<body>
+	<nav class="navbar navbar-light bg-light">
+  		<a class="navbar-brand" href="#">For the People</a>
+	</nav>
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-12">
+				<h1 id="name">Rep. Soinso Whatsername</h1>
+			</div>
+		</div><!--End row-->
+		<div class="row">
+			<div class="col-lg-4">
+				<img src="https://thumbs.dreamstime.com/z/worried-stressed-depressed-office-worker-business-woman-receiving-bad-news-emergency-phone-call-work-looking-confused-68406552.jpg" id="photo" alt="Photo of Representative">
+			</div>
+			<div class="col-lg-8">
+				<p id="state">State: </p>
+				<p id="party">Party: </p>
+				<p id="phone">Phone: </p>
+				<p id="email">Email: </p>
+				<p id="twitter">Twitter: </p>
+			</div>
+		</div><!--End of row-->
+		<div class="row">
+			<div class="col-lg-4">
+				<p id="totVotes">Total Votes: </p>
+				<p id="missed">Percentage of Votes Missed: </p>
+				<p id="withParty">Percentage of Votes with Party:</p>
+			</div>
+			<div class="col-lg-8">
+				<h3>Recent Vote Activity</h3>
+				<div id="votes">
+					<!--Each "vote" section will be dynamically generated from the API call to the #votes div-->
+					<div class="vote">
+						<div class="row">
+							<div class="col-lg-4">
+								<p class="billID">Bill ID</p>
+							</div>
+							<div class="col-lg-8">
+								<p class="billName">Name of Legislation</p>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-lg-4">
+								<p class="stance">Position: Yes or No</p>
+							</div>
+							<div class="col-lg-4">
+								<p class="votePrcnt">Votes: #Y/#N</p>
+							</div>
+							<div class="col-lg-4">
+								<p class="voteStatus">Status: Passed or Not</p>
+							</div>
+						</div>
+					</div><!--End vote-->
+					<div class="vote">
+						<div class="row">
+							<div class="col-lg-4">
+								<p>Bill ID</p>
+							</div>
+							<div class="col-lg-8">
+								<p class="bill">Name of Legislation</p>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-lg-4">
+								<p>Position: Yes or No</p>
+							</div>
+							<div class="col-lg-4">
+								<p>Votes: #Y/#N</p>
+							</div>
+							<div class="col-lg-4">
+								<p>Status: Passed or Not</p>
+							</div>
+						</div>
+					</div><!--End vote-->
+					<div class="vote">
+						<div class="row">
+							<div class="col-lg-4">
+								<p>Bill ID</p>
+							</div>
+							<div class="col-lg-8">
+								<p class="bill">Name of Legislation</p>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-lg-4">
+								<p>Position: Yes or No</p>
+							</div>
+							<div class="col-lg-4">
+								<p>Votes: #Y/#N</p>
+							</div>
+							<div class="col-lg-4">
+								<p>Status: Passed or Not</p>
+							</div>
+						</div>
+					</div><!--End vote-->
+					<!--End of dynamically generated content-->
+				</div><!--End votes-->
+			</div><!--End col-->
+		</div><!--End row-->
+	</div><!--End of container-->
+</body>
+</html>
