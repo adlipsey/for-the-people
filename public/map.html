@@ -67,16 +67,25 @@
 		</div><!--End of row-->
 	</div><!--End of container-->
 	<script type="text/javascript">
+		var mymap;
+		var pollInfo;
 		$.get("/api/map").done(function(res){
-			console.log(res);
-			var mymap = L.map("voterMap").setView(res.geocode, 15);
+			mymap = L.map("voterMap").setView(res.geocode, 15);
 			L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
     			attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
 			}).addTo(mymap);
 			
 			var user = L.marker(res.geocode).addTo(mymap);
 			user.bindPopup(res.address + "<br>Your Home");
+		}).done( function(){
+			$.get("/api/polls").done(function(resp){
+				pollInfo = resp;
+				console.log(JSON.stringify(resp, null, 2));
+				var poll = L.marker(resp.address.geo).addTo(mymap);
+				poll.bindPopup(resp.address.locationName);
+			});
 		});
+
 	</script>
 </body>
 </html>

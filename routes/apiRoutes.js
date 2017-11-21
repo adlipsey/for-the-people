@@ -1,5 +1,7 @@
 //Dependencies
 var geocoder = require("geocoder");
+var request = require("request");
+var userAddress = "1000 Priory Pl McLean VA 22101";
 
 //Routes to export
 module.exports = function(app){
@@ -10,7 +12,6 @@ module.exports = function(app){
 	});
 
 	app.get("/api/map", function(req, res){
-		var userAddress = "14880 Swallow Ct Woodbridge VA 22193";
 		var response = {};
 		var lat;
 		var long;
@@ -22,6 +23,25 @@ module.exports = function(app){
 				geocode: [lat, long],
 			};
 			res.json(response);
+		});
+	});
+
+	app.get("/api/polls", function(req, res){
+		userAddress = userAddress.replace(/ /g, '+');
+		var apiKey = "AIzaSyBDBQQzdDurAqr7Ve-KKpKTrdVKb5oDO7s";
+		var url = "https://www.googleapis.com/civicinfo/v2/voterinfo?address="+ userAddress +"&electionId=2000&returnAllAvailableData=true&key=" + apiKey;
+		request(url, function(err, resp, body){
+			body = JSON.parse(body);
+			var pollInfo = body.pollingLocations[0];
+			var lat;
+			var long;
+			var addString = pollInfo.address.line1 + " " + pollInfo.address.city + " " + pollInfo.address.state + " " + pollInfo.address.zip;
+			geocoder.geocode(addString, function(err, data){
+				lat = data.results[0].geometry.location.lat;
+				long = data.results[0].geometry.location.lng;
+				pollInfo.address.geo = [lat, long];
+				res.json(pollInfo);
+			});
 		});
 	});
 
