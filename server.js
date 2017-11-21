@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 firebase.auth().onAuthStateChanged( user => {
     if (user) {
         // If user state changes and 'user' exists, check Firebase Database for user
@@ -13,7 +13,7 @@ firebase.auth().onAuthStateChanged( user => {
             }
         });
     }
-=======
+
 //Dependencies
 var express = require("express");
 var path = require("path");
@@ -34,5 +34,4 @@ require("./routes/htmlRoutes.js")(app);
 //Console log listener @ PORT
 app.listen(PORT, function() {
   console.log("App listening on PORT " + PORT);
->>>>>>> 12c3c9ca3e60c17b58e5409b0490e762130c6c48
 });
