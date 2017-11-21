@@ -13,7 +13,7 @@
    <!--Leaflet js CDN-->
    <script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js" integrity="sha512-lInM/apFSqyy1o6s89K4iQUKg6ppXEgsVxT35HbzUupEVRh2Eu9Wdl4tHj7dZO0s1uvplcYGmt3498TtHq+log==" crossorigin=""></script>
   
-	<style> .col-lg-12 { padding: 10px; margin: 5px;} .places {padding: 10px; margin: 10px; border: 2px solid black;} p{padding:10px; margin: 10px;} p:hover { color: red;} p.map {padding: 50px; border: 2px solid blue;} #voterMap {height: 50vw; width: 50vw; margin:0 auto;}</style>
+	<style> .col-lg-12 { padding: 10px; margin: 5px;} .places {padding: 10px; margin: 10px; border: 2px solid black;} p{padding:10px; margin: 10px;} p:hover { color: red;} p.map {padding: 50px; border: 2px solid blue;} #voterMap {height: 33vw; width: 33vw; margin:0 auto;}</style>
 </head>
 <body>
 	<nav class="navbar navbar-light bg-light">
@@ -28,63 +28,49 @@
 		</div><!--End of row-->
 		<div class="row">
 			<div class="col-lg-12" id="list">
-				<h3>Nearest Polling Places</h3>
-				<!--Each of the .places below will by dynamically generated from API call and pushed to #list div-->
+				<h3>Designated Polling Place</h3>
 				<div class="places">
 					<div class="row">
-						<div class="col-lg-2">
-							<p class="loc-name">Location Name</p>
+						<div class="col-lg-3">
+							<p class="loc-name"></p>
 						</div>
 						<div class="col-lg-6">
-							<p class="loc-add">Address</p>
+							<p class="loc-add"></p>
 						</div>
-						<div class="col-lg-2">
-							<p class="loc-hours">Hours</p>
-						</div>
-						<div class="col-lg-2">
-							<p class="loc-dist">Distance</p>
+						<div class="col-lg-3">
+							<p class="loc-hours"></p>
 						</div>
 					</div>
 				</div><!--End of place entry-->
-				<div class="places">
-					<div class="row">
-						<div class="col-lg-2">
-							<p class="loc-name">Location Name</p>
-						</div>
-						<div class="col-lg-6">
-							<p class="loc-add">Address</p>
-						</div>
-						<div class="col-lg-2">
-							<p class="loc-hours">Hours</p>
-						</div>
-						<div class="col-lg-2">
-							<p class="loc-dist">Distance</p>
-						</div>
-					</div>
-				</div><!--End of place entry-->
-				<!--End of dynamically generated content-->
 			</div><!--End col #list-->
 		</div><!--End of row-->
 	</div><!--End of container-->
 	<script type="text/javascript">
+	$(document).ready(function(){
 		var mymap;
-		var pollInfo;
+		//http request to get user address from DB
 		$.get("/api/map").done(function(res){
+			//Center map on user's geocoded address
 			mymap = L.map("voterMap").setView(res.geocode, 15);
+			//OpenStreetMap tile layer so it looks pretty
 			L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
     			attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
 			}).addTo(mymap);
-			
+			//Place marker at user's address
 			var user = L.marker(res.geocode).addTo(mymap);
+			//Pop-up to clarify it is the user's house
 			user.bindPopup(res.address + "<br>Your Home");
 		}).done( function(){
+			//
 			$.get("/api/polls").done(function(resp){
-				pollInfo = resp;
-				console.log(JSON.stringify(resp, null, 2));
 				var poll = L.marker(resp.address.geo).addTo(mymap);
 				poll.bindPopup(resp.address.locationName);
+				$(".loc-name").html(resp.address.locationName);
+				$(".loc-add").html(resp.address.line1 + " " + resp.address.city+", "+resp.address.state+ " " + resp.address.zip);
+				$(".loc-hours").html("Open: " + resp.pollingHours);
 			});
 		});
+	});
 
 	</script>
 </body>

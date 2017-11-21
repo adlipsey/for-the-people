@@ -1,7 +1,7 @@
 //Dependencies
 var geocoder = require("geocoder");
 var request = require("request");
-var userAddress = "1000 Priory Pl McLean VA 22101";
+var userAddress = "14880 Swallow Ct Woodbridge VA 22193";
 
 //Routes to export
 module.exports = function(app){
@@ -16,6 +16,7 @@ module.exports = function(app){
 		var lat;
 		var long;
 		geocoder.geocode(userAddress, function(err, data){
+			console.log(err);
 			lat = data.results[0].geometry.location.lat;
 			long = data.results[0].geometry.location.lng;
 			response = {
