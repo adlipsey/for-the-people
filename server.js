@@ -1,4 +1,4 @@
-
+/*
 firebase.auth().onAuthStateChanged( user => {
     if (user) {
         // If user state changes and 'user' exists, check Firebase Database for user
@@ -13,6 +13,7 @@ firebase.auth().onAuthStateChanged( user => {
             }
         });
     }
+});*/
 
 //Dependencies
 var express = require("express");
