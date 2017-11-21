@@ -2,9 +2,18 @@
 <html>
 <head>
 	<title>For the People - Polling Places</title>
+	<!--jQuery Core CDN-->
 	<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+	<!--Bootstrap CSS CDN-->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
-	<style> .col-lg-12 {text-align: center; padding: 10px; margin: 5px;} .places {padding: 10px; margin: 10px; border: 2px solid black;} p{padding:10px; margin: 10px;} p:hover { color: red;} p.map {padding: 50px; border: 2px solid blue;}</style>
+	<!--Leaflet CSS CDN-->
+	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css"
+   integrity="sha512-M2wvCLH6DSRazYeZRIm1JnYyh22purTM+FDB5CsyxtQJYeKq83arPe5wgbNmcFXGqiSH2XR8dT/fJISVA1r/zQ=="
+   crossorigin=""/>
+   <!--Leaflet js CDN-->
+   <script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js" integrity="sha512-lInM/apFSqyy1o6s89K4iQUKg6ppXEgsVxT35HbzUupEVRh2Eu9Wdl4tHj7dZO0s1uvplcYGmt3498TtHq+log==" crossorigin=""></script>
+  
+	<style> .col-lg-12 { padding: 10px; margin: 5px;} .places {padding: 10px; margin: 10px; border: 2px solid black;} p{padding:10px; margin: 10px;} p:hover { color: red;} p.map {padding: 50px; border: 2px solid blue;} #voterMap {height: 50vw; width: 50vw; margin:0 auto;}</style>
 </head>
 <body>
 	<nav class="navbar navbar-light bg-light">
@@ -13,11 +22,13 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-lg-12">
-				<p class="map">Map will go here</p>
+				<div  class="text-center" id="voterMap">
+				</div>
 			</div><!--End col-->
 		</div><!--End of row-->
 		<div class="row">
 			<div class="col-lg-12" id="list">
+				<h3>Nearest Polling Places</h3>
 				<!--Each of the .places below will by dynamically generated from API call and pushed to #list div-->
 				<div class="places">
 					<div class="row">
@@ -55,5 +66,17 @@
 			</div><!--End col #list-->
 		</div><!--End of row-->
 	</div><!--End of container-->
+	<script type="text/javascript">
+		$.get("/api/map").done(function(res){
+			console.log(res);
+			var mymap = L.map("voterMap").setView(res.geocode, 15);
+			L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+    			attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+			}).addTo(mymap);
+			
+			var user = L.marker(res.geocode).addTo(mymap);
+			user.bindPopup(res.address + "<br>Your Home");
+		});
+	</script>
 </body>
 </html>
