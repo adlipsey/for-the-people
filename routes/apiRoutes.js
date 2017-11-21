@@ -1,7 +1,15 @@
 //Dependencies
-var geocoder = require("geocoder");
+var NodeGeocoder = require("node-geocoder");
 var request = require("request");
-var userAddress = "14880 Swallow Ct Woodbridge VA 22193";
+
+var options = {
+  provider: 'google',
+  httpAdapter: 'https', 
+  apiKey: 'AIzaSyBDBQQzdDurAqr7Ve-KKpKTrdVKb5oDO7s',   
+};
+ 
+var geocoder = NodeGeocoder(options);
+
 
 //Routes to export
 module.exports = function(app){
@@ -10,15 +18,16 @@ module.exports = function(app){
 		var newFriend = req.body;
 		res.json(friends.findFriend(newFriend));
 	});*/
+	var geocoder = NodeGeocoder(options);
 
 	app.get("/api/map", function(req, res){
+		var userAddress = "14880 Swallow Ct Woodbridge VA 22193";
 		var response = {};
 		var lat;
 		var long;
 		geocoder.geocode(userAddress, function(err, data){
-			console.log(err);
-			lat = data.results[0].geometry.location.lat;
-			long = data.results[0].geometry.location.lng;
+			lat = data[0].latitude;
+			long = data[0].longitude;
 			response = {
 				address: userAddress,
 				geocode: [lat, long],
@@ -28,6 +37,7 @@ module.exports = function(app){
 	});
 
 	app.get("/api/polls", function(req, res){
+		var userAddress = "14880 Swallow Ct Woodbridge VA 22193";
 		userAddress = userAddress.replace(/ /g, '+');
 		var apiKey = "AIzaSyBDBQQzdDurAqr7Ve-KKpKTrdVKb5oDO7s";
 		var url = "https://www.googleapis.com/civicinfo/v2/voterinfo?address="+ userAddress +"&electionId=2000&returnAllAvailableData=true&key=" + apiKey;
@@ -38,12 +48,12 @@ module.exports = function(app){
 			var long;
 			var addString = pollInfo.address.line1 + " " + pollInfo.address.city + " " + pollInfo.address.state + " " + pollInfo.address.zip;
 			geocoder.geocode(addString, function(err, data){
-				lat = data.results[0].geometry.location.lat;
-				long = data.results[0].geometry.location.lng;
+				lat = data[0].latitude;
+				long = data[0].longitude;
 				pollInfo.address.geo = [lat, long];
 				res.json(pollInfo);
 			});
 		});
 	});
 
-};
+};//End module exports
