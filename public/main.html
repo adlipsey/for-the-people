@@ -1,15 +1,140 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-us">
+
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>For the people</title>
+    <!-- Bootstrap CDN -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <!-- jQuery CDN -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <!-- Linking CSS -->
+    <link rel="stylesheet" href="styles.css">
+
 </head>
+
 <body>
 
+    <nav class="navbar navbar-default">
+        <!-- ROW 1 NAV BAR-->
+        <div class="container">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">For The People</a>
+            </div>
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="#">Welcome, user</a></li>
+                    <li><a href="#">Sign Out</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <header id="header">
+        <div class="container">
+            <div class="row">
+                <h1 id="user-name"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> "Omar Leiva"</h1>
+            </div>
+        </div>
+    </header>
+
+    <section id="display">
+        <div class="container">
+            <h4 id="district"> Your voting district is << id="district" >> </h4>
+        </div>
+    </section>
+
+    <section id="main">
+        <div class="container">
+            <div class="row">
+                <!-- MAIN CONTENT -->
+                <div class="col-md-8">
+                    <div class="panel panel-default">
+                      <div class="panel-heading main-color-bg">
+                        <h3 class="panel-title">Your representatives are</h3>
+                      </div>
+                      <div class="panel-body">
+                        <div class="col-md-6">
+                            <div class="panel panel-default">
+                              <div class="panel-heading">
+                                <h3 class="panel-title"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> National Representatives</h3>
+                              </div>
+                              <div class="panel-body">
+                                  <div id="national-rep">
+                                      <p>
+                                          id="national-rep"
+                                      </p>
+                                  </div>
+                              </div>
+                            </div>
+
+                        </div>
+                        <div class="col-md-6">
+                            <div class="panel panel-default">
+                              <div class="panel-heading">
+                                <h3 class="panel-title"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> State Representatives</h3>
+                              </div>
+                              <div class="panel-body">
+                                <div id="state-rep">
+                                    <p>
+                                        id="state-rep"
+                                    </p>
+                                </div>
+                              </div>
+                            </div>
+                        </div>
+                      </div>
+                    </div>
+                </div> <!-- End main content -->
+                <!-- SIDEBAR -->
+                <div class="col-md-4">
+                    <div class="list-group">
+                      <p class="list-group-item active main-color-bg">
+                        Next Election Date
+                      </p>
+                      <p id="elect-date"class="list-group-item"><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>  Fill in with dates id="elect-date" </p>
+                    </div>
+                    <div class="list-group">
+                      <p class="list-group-item active main-color-bg">
+                        Voting places near you!
+                      </p>
+                      <p class="list-group-item">
+                         <span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span>
+                         Link to map, or, thumbnail of map id="map"<br />
+                      </p>
+                      <div id="map">
+                          <a href="#" class="list-group-item"><img src="http://placehold.it/150x150" alt="Placeholder" class="img-thumbnail">
+
+                          </a>
+                      </div>
+                    </div>
+                </div> <!-- End sidebar -->
+
+            </div> <!-- End row -->
+        </div> <!-- End main container -->
+    </section> <!-- End main section -->
+
+    <section> <!-- Bills section -->
+        <div class="container">
+            <div class="list-group">
+              <h4 class="list-group-item active main-color-bg">
+                Upcomming bills
+              </h4>
+              <div id="bills" class="list-group-item"><span class="glyphicon glyphicon-file" aria-hidden="true"></span>  Bills info goes here id="bills" </div>
+            </div>
+        </div>
+    </section><!-- End Bills section -->
+
+
+
 </body>
-</html><!-- Copy and paste the snippet below at the bottom of your HTML, before other script tags -->
+
+</html>
+
+<!-- Copy and paste the snippet below at the bottom of your HTML, before other script tags -->
 <script src="https://www.gstatic.com/firebasejs/4.6.2/firebase.js"></script>
 <script>
   // Initialize Firebase
