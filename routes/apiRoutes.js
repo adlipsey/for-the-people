@@ -2,13 +2,19 @@
 var NodeGeocoder = require("node-geocoder");
 var request = require("request");
 
-var options = {
+var geoOptions = {
   provider: 'google',
   httpAdapter: 'https', 
   apiKey: 'AIzaSyBDBQQzdDurAqr7Ve-KKpKTrdVKb5oDO7s',   
 };
+
+var reqOptions = {
+	headers: {
+		"X-API-Key": "JcaPVmchRmzfYAdk2zs8gxOSDiVedhOF37VExFTX"
+	}
+};
  
-var geocoder = NodeGeocoder(options);
+var geocoder = NodeGeocoder(geoOptions);
 
 
 //Routes to export
@@ -18,7 +24,9 @@ module.exports = function(app){
 		var newFriend = req.body;
 		res.json(friends.findFriend(newFriend));
 	});*/
-	var geocoder = NodeGeocoder(options);
+
+	var userAddress = "14880 Swallow Ct Woodbridge VA 22193";
+	var googApiKey = "AIzaSyBDBQQzdDurAqr7Ve-KKpKTrdVKb5oDO7s";
 
 	app.get("/api/map", function(req, res){
 		var userAddress = "14880 Swallow Ct Woodbridge VA 22193";
@@ -37,10 +45,8 @@ module.exports = function(app){
 	});
 
 	app.get("/api/polls", function(req, res){
-		var userAddress = "14880 Swallow Ct Woodbridge VA 22193";
 		userAddress = userAddress.replace(/ /g, '+');
-		var apiKey = "AIzaSyBDBQQzdDurAqr7Ve-KKpKTrdVKb5oDO7s";
-		var url = "https://www.googleapis.com/civicinfo/v2/voterinfo?address="+ userAddress +"&electionId=2000&returnAllAvailableData=true&key=" + apiKey;
+		var url = "https://www.googleapis.com/civicinfo/v2/voterinfo?address="+ userAddress +"&electionId=2000&returnAllAvailableData=true&key=" + googApiKey;
 		request(url, function(err, resp, body){
 			body = JSON.parse(body);
 			var pollInfo = body.pollingLocations[0];
@@ -52,6 +58,49 @@ module.exports = function(app){
 				long = data[0].longitude;
 				pollInfo.address.geo = [lat, long];
 				res.json(pollInfo);
+			});
+		});
+	});
+
+	app.get("/api/rep", function(req, res){
+		var repData = {};
+		reqOptions.url = "https://api.propublica.org/congress/v1/members/W000802.json";
+		request(reqOptions, function(err, resp, body){
+			body = JSON.parse(body);
+			repData.memID = body.results[0].member_id;
+			repData.ocd_id = body.results[0].roles[0].ocd_id;
+			repData.title = body.results[0].roles[0].short_title;
+			repData.name = body.results[0].first_name + " " + body.results[0].last_name;
+			repData.state = body.results[0].roles[0].state;
+			repData.party = body.results[0].roles[0].party;
+			repData.office = body.results[0].roles[0].office;
+			repData.phone = body.results[0].roles[0].phone;
+			repData.twitter = body.results[0].twitter_account;
+			repData.termEnd = body.results[0].roles[0].end_date;
+			repData.committees = body.results[0].roles[0].committees;
+			repData.missedVotes = body.results[0].roles[0].missed_votes_pct;
+			repData.partyVotes = body.results[0].roles[0].votes_with_party_pct;
+			reqOptions.url = "https://api.propublica.org/congress/v1/members/"+body.results[0].member_id+"/votes.json";
+			request(reqOptions, function(eror, rsp, text){
+				text = JSON.parse(text);
+				repData.votes = text.results[0].votes;
+				var url = "https://www.googleapis.com/civicinfo/v2/representatives?address="+userAddress+"&key="+googApiKey;
+				request(url, function(error, rsp, content){
+					if(error){
+						console.log(error);
+					}
+					else{
+						content = JSON.parse(content);
+						for(var j = 0; j < content.officials.length; j++){
+							if(content.officials[j].name === repData.name){
+								repData.photo = content.officials[j].photoUrl;
+								res.json(repData);
+							}
+						}
+						repData.photo = "http://garykingwebdevelopment.com/images/placeholders/team-placeholder.jpg"
+						res.json(repData);
+					}
+				});
 			});
 		});
 	});
