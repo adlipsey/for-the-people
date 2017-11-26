@@ -1,0 +1,80 @@
+<!-- <button id="googleLogin" type="button" name="button">Login</button> -->
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+<script src="https://cdn.firebase.com/js/client/1.0.18/firebase.js"></script>
+
+<div class="signup">
+    <h2 class="signup-title">Sign up!</h2>
+    <p id="signup-success" class="text-success"></p>
+    <p id="signup-error" class="text-danger"></p>
+    <form class="signup-form form-inline" id="signup-form" role="form" onsubmit="return signup(this)">
+        <input class="form-control" name="email" type="email" placeholder="Your email. eg., joe@acme.com" required>
+        <button class="btn btn-success" id="signup-button" type="submit" >Submit Now</button>
+    </form>
+</div>
+
+<script>
+    var signupForm = document.getElementById('signup-form');
+    var signupSuccess = document.getElementById('signup-success');
+    var signupError = document.getElementById('signup-error');
+    var signupBtn = document.getElementById('signup-button');
+    var onSignupComplete = function(error) {
+      signupBtn.disabled = false;
+      if (error) {
+        signupError.innerHTML = 'Sorry. Could not signup.';
+      } else {
+        signupSuccess.innerHTML = 'Thanks for signing up!';
+        // hide the form
+        signupForm.style.display = 'none';
+
+      }
+       
+    };
+    function signup(formObj) {
+        // Store emails to firebase
+        var myFirebaseRef = new Firebase("https://project-2-45594.firebaseio.com/signups");
+        myFirebaseRef.push({
+          email: formObj.email.value,
+        }, onSignupComplete);
+        signupBtn.disabled = true;
+        return false;
+    }
+</script>
+
+
+<script>
+    // Send message
+    var contactFrom = document.getElementById('contact-form');
+    var contactSuccess = document.getElementById('contact-success');
+    var contactError = document.getElementById('contact-error');
+    var sendBtn = document.getElementById('send-button');
+    var onMessageComplete = function(error) {
+      sendBtn.disabled = false;
+      if (error) {
+        contactError.innerHTML = 'Sorry. Could not send message.';
+      } else {
+        contactSuccess.innerHTML = "Message has been sent.";
+        // hide the form
+        contactFrom.style.display = 'none';
+      }
+    };
+    function sendMessage(formObj) {
+        // Store emails to firebase
+        var myFirebaseRef = new Firebase("https://project-2-45594.firebaseio.com/messages");
+        myFirebaseRef.push({
+          name: formObj.name.value,
+          email: formObj.email.value,
+          message: formObj.message.value
+        }, onMessageComplete);
+        sendBtn.disabled = true;
+        return false;
+    }
+</script>
+
+</body>
+</html>
