@@ -29,6 +29,7 @@ module.exports = function(app){
 	var googApiKey = "AIzaSyBDBQQzdDurAqr7Ve-KKpKTrdVKb5oDO7s";
 
 	app.get("/api/map", function(req, res){
+		//Replace with post request pulling address data from database
 		var userAddress = "14880 Swallow Ct Woodbridge VA 22193";
 		var response = {};
 		var lat;
@@ -62,8 +63,35 @@ module.exports = function(app){
 		});
 	});
 
+	app.post("/api/main", function(req, res){
+		var userData = req.body;
+		var url = "https://www.googleapis.com/civicinfo/v2/representatives?address="+ userData.address +"&electionId=2000&returnAllAvailableData=true&key=" + googApiKey;
+		request(url, function(err, resp, body){
+			body = JSON.parse(body);
+			userData.posts = [];
+			var post;
+			body.offices.forEach(function(element){
+				post = {};
+				post.name = element.name;
+				post.ppl = [];
+				element.officialIndices.forEach(function(ele){
+					post.ppl.push(body.officials[ele].name);
+				});
+				userData.posts.push(post);
+			});
+			var getDistrict = userData.posts[3].name.split("-");
+			userData.district = getDistrict[1];
+			res.json(userData);
+		});
+
+		
+
+	});
+
 	app.get("/api/rep", function(req, res){
+		//Creates object for rep data to be stored and passed to front end
 		var repData = {};
+		//Replace member id at end of url with member id from post request
 		reqOptions.url = "https://api.propublica.org/congress/v1/members/W000802.json";
 		request(reqOptions, function(err, resp, body){
 			body = JSON.parse(body);
