@@ -35,8 +35,8 @@
         </div>
     </nav>
 
-    <header id="header">
-        <div class="container">
+    <header >
+        <div class="container" id="header">
             <div class="row">
                 <h1 id="user-name"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> "Omar Leiva"</h1>
             </div>
@@ -44,8 +44,8 @@
     </header>
 
 
-    <section id="display">
-        <div class="container">
+    <section>
+        <div class="container" id="display">
             <h4 id="district"> Your voting district is:  </h4>
         </div>
     </section>
@@ -97,11 +97,6 @@
                         Next Election Date
                       </p>
                       <p id="elect-date"class="list-group-item"><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>  Fill in with dates id="elect-date" </p>
-                    </div>
-                    <div class="list-group">
-                      <p class="list-group-item active main-color-bg">
-                        Voting places near you!
-                      </p>
                       <p class="list-group-item">
                          <span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span>
                          Link to map, or, thumbnail of map id="map"<br />
@@ -112,6 +107,7 @@
                           </a>
                       </div>
                     </div>
+
                 </div> <!-- End sidebar -->
 
             </div> <!-- End row -->
@@ -151,25 +147,29 @@
   var userData = {};
   userData.address = "14880 Swallow Ct Woodbridge VA 22193";
 
+
+    // POPULATE REPRESENTATIVES
   $.post("/api/main", userData).done(function(res){
     console.log(JSON.stringify(res, null, 2));
     userData.district = res.district;
     $("#district").text("Your congressional voting district is: "+ res.district);
     var natDiv;
     var statDiv;
+    // NATIONAL REPS
     for(var i = 0; i< 4; i++){
-      natDiv = $("<div />");
-      natDiv.html("<p class='job'>"+ res.posts[i].name+"</p>");
+      natDiv = $("<div class='list-group' />");
+      natDiv.html("<p class='job list-group-item active'>"+ res.posts[i].name+"</p>");
       res.posts[i].ppl.forEach(function(element){
-        natDiv.append("<a href='"+res.posts[i].urls[res.posts[i].ppl.indexOf(element)]+"'><p>"+ element+"</p></a>");
+        natDiv.append("<a href='"+res.posts[i].urls[res.posts[i].ppl.indexOf(element)]+"'><p class='list-group-item'>"+ element+"</p></a>");
       });
       natDiv.appendTo($("#national-rep"));
     }
+    // STATE REPS
     for(var j = 4; j < res.posts.length; j++){
-      statDiv = $("<div />");
-      statDiv.html("<p class='job'>"+ res.posts[j].name+"</p>");
+      statDiv = $("<div class='list-group' />");
+      statDiv.html("<p class='job list-group-item active'>"+ res.posts[j].name+"</p>");
       res.posts[j].ppl.forEach(function(element){
-        statDiv.append("<a href='"+res.posts[j].urls[res.posts[j].ppl.indexOf(element)]+"'><p>"+ element+"</p></a>");
+        statDiv.append("<a href='"+res.posts[j].urls[res.posts[j].ppl.indexOf(element)]+"'><p class='list-group-item'>"+ element+"</p></a>");
       });
       statDiv.appendTo($("#state-rep"));
     }
