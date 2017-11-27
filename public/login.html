@@ -3,20 +3,35 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title></title>
+	<title>Login</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <!-- jQuery CDN -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <!-- Linking CSS -->
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-<script src="https://cdn.firebase.com/js/client/1.0.18/firebase.js"></script>
+    <section> <!-- Bills section -->
+        <div class="container" style="width: 500px; margin-top: 250px;">
+              <h4 class="list-group-item active main-color-bg">
+                Sign up
+              </h4>
+              <div class="list-group-item">
+                  <div class="signup">
+                      <p id="signup-success" class="text-success"></p>
+                      <p id="signup-error" class="text-danger"></p>
+                      <form class="signup-form form-inline" id="signup-form" role="form" onsubmit="return signup(this)">
+                          <input class="form-control" name="email" type="email" placeholder="Your email. eg., joe@acme.com" required>
+                          <button class="btn btn-success" id="signup-button" type="submit" >Submit Now</button>
+                      </form>
+                  </div>
 
-<div class="signup">
-    <h2 class="signup-title">Sign up!</h2>
-    <p id="signup-success" class="text-success"></p>
-    <p id="signup-error" class="text-danger"></p>
-    <form class="signup-form form-inline" id="signup-form" role="form" onsubmit="return signup(this)">
-        <input class="form-control" name="email" type="email" placeholder="Your email. eg., joe@acme.com" required>
-        <button class="btn btn-success" id="signup-button" type="submit" >Submit Now</button>
-    </form>
-</div>
+              </div>
+            </div>
+        </div>
+    </section><!-- End Bills section -->
+
+<script src="https://cdn.firebase.com/js/client/1.0.18/firebase.js"></script>
 
 <script>
     var signupForm = document.getElementById('signup-form');
@@ -33,7 +48,7 @@
         signupForm.style.display = 'none';
 
       }
-       
+
     };
     function signup(formObj) {
         // Store emails to firebase
