@@ -4,15 +4,29 @@
 	<title>For the People - Representative Bio</title>
 	<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+	<link rel="stylesheet" href="styles.css">
+
 	<style> #photo { width: 100%; height: auto; } .vote{ border: 2px solid black; padding: 10px; margin: 5px;} #photo {margin: 5px; width:100%; height: auto; } p.bill:hover {color: blue;}</style>
 </head>
+
 <body>
-	<nav class="navbar navbar-light bg-light">
-  		<a class="navbar-brand" href="#">For the People</a>
-	</nav>
-	<div class="container">
+	<nav class="navbar navbar-default">
+        <!-- ROW 1 NAV BAR-->
+        <div class="container">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">For The People</a>
+            </div>
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="#">Welcome, user</a></li>
+                    <li><a href="#">Sign Out</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+	<div class="container" >
 		<div class="row">
-			<div class="col-lg-12">
+			<div class="col-lg-12" id="display">
 				<h1 id="name">Rep. Soinso Whatsername</h1>
 			</div>
 		</div><!--End row-->
@@ -21,28 +35,45 @@
 				<img id="photo" src="http://www.divorce.legal/wp-content/uploads/2010/10/younger-business-woman.jpg">
 			</div>
 			<div class="col-lg-8">
-				<p id="state">State: </p>
-				<p id="party">Party: </p>
-				<p id="office">Office: </p>
-				<p id="phone">Phone: </p>
-				<p id="twitter">Twitter: </p>
+				<div class="list-group">
+				  <!-- <p class="list-group-item active main-color-bg">
+					General Info
+				  </p> -->
+				  <p id="state"class="list-group-item">State: </p>
+				  <p id="party"class="list-group-item">Party: </p>
+				  <p id="office"class="list-group-item">Office: </p>
+				  <p id="phone"class="list-group-item">Phone: </p>
+				  <p id="twitter"class="list-group-item">Twitter: </p>
+				</div>
 			</div>
+
+
+
 		</div><!--End of row-->
+
 		<div class="row">
 			<div class="col-lg-4">
-				<p id="totVotes">Total Votes: </p>
-				<p id="missed">Percentage of Votes Missed: </p>
-				<p id="withParty">Percentage of Votes with Party:</p>
-				<p id="termEnd"></p>
-				<p>Committees:</p>
-				<ul id="committees"></ul>
+				<div class="list-group">
+				  <p class="list-group-item active main-color-bg">
+					Voting Info
+				  </p>
+				  <p id="totVotes"class="list-group-item">Total Votes: </p>
+				  <p id="missed"class="list-group-item">Percentage of Votes Missed: </p>
+				  <p id="withParty"class="list-group-item">Percentage of Votes with Party: </p>
+				  <p id="termEnd"class="list-group-item">Term End:</p>
+				  <ul id="committees" class="list-group-item">Committees</ul>
+				</div>
+
+
 			</div>
 			<div class="col-lg-8">
-				<h3>Recent Vote Activity</h3>
-				<div id="votes">
-					<!--Each "vote" section will be dynamically generated from the API call to the #votes div-->
-					<!--End of dynamically generated content-->
-				</div><!--End votes-->
+				<div class="list-group">
+					<h5 class="list-group-item active main-color-bg">Recent Vote Activity</h5>
+					<div id="votes" class="list-group-item">
+						<!--Each "vote" section will be dynamically generated from the API call to the #votes div-->
+						<!--End of dynamically generated content-->
+					</div><!--End votes-->
+				</div>
 			</div><!--End col-->
 		</div><!--End row-->
 	</div><!--End of container-->

@@ -103,10 +103,11 @@ body {
 }
 
 /*District*/
-#display #district{
+#display {
     background-color:  #393F4C;
     color: #ffffff;
     padding: 15px;
+    margin-bottom: 15px;
 }
 
 
