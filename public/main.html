@@ -149,10 +149,11 @@
   };
   firebase.initializeApp(config);
   var userData = {};
-  userData.address = "4424 Willow Woods Dr Annandale VA 22003";
+  userData.address = "14880 Swallow Ct Woodbridge VA 22193";
 
   $.post("/api/main", userData).done(function(res){
     console.log(JSON.stringify(res, null, 2));
+    userData.district = res.district;
     $("#district").text("Your congressional voting district is: "+ res.district);
     var natDiv;
     var statDiv;
@@ -160,7 +161,7 @@
       natDiv = $("<div />");
       natDiv.html("<p class='job'>"+ res.posts[i].name+"</p>");
       res.posts[i].ppl.forEach(function(element){
-        natDiv.append("<p>"+ element+"</p>");
+        natDiv.append("<a href='"+res.posts[i].urls[res.posts[i].ppl.indexOf(element)]+"'><p>"+ element+"</p></a>");
       });
       natDiv.appendTo($("#national-rep"));
     }
@@ -168,7 +169,7 @@
       statDiv = $("<div />");
       statDiv.html("<p class='job'>"+ res.posts[j].name+"</p>");
       res.posts[j].ppl.forEach(function(element){
-        statDiv.append("<p>"+ element+"</p>");
+        statDiv.append("<a href='"+res.posts[j].urls[res.posts[j].ppl.indexOf(element)]+"'><p>"+ element+"</p></a>");
       });
       statDiv.appendTo($("#state-rep"));
     }

@@ -74,8 +74,15 @@ module.exports = function(app){
 				post = {};
 				post.name = element.name;
 				post.ppl = [];
+				post.urls = [];
 				element.officialIndices.forEach(function(ele){
 					post.ppl.push(body.officials[ele].name);
+					if(body.officials[ele].urls){
+						post.urls.push(body.officials[ele].urls[0]);
+					}
+					else{
+						post.urls.push("/home");
+					}
 				});
 				userData.posts.push(post);
 			});
