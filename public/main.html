@@ -8,7 +8,7 @@
 
     <title>For the people</title>
     <!-- Bootstrap CDN -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <!-- jQuery CDN -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <!-- Linking CSS -->
@@ -93,7 +93,7 @@
                       <p class="list-group-item active main-color-bg">
                         Next Election Date
                       </p>
-                      <p id="elect-date" class="list-group-item"><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span></p>
+                      <p id="elect-date"class="list-group-item"><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>  Fill in with dates id="elect-date" </p>
                       <p class="list-group-item">
                          <span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span>
                          Link to map, or, thumbnail of map id="map"<br />
@@ -143,7 +143,6 @@
   firebase.initializeApp(config);
   var userData = {};
   userData.address = "14880 Swallow Ct Woodbridge VA 22193";
-  userData.state = "va";
 
 
     // POPULATE REPRESENTATIVES
@@ -171,25 +170,5 @@
       });
       statDiv.appendTo($("#state-rep"));
     }
-
-    //Elections
-    if(res.elections.length === 0){
-      $("#elect-date").append("<p>There are no upcoming elections</p>");
-    }
-    else{
-      var elec;
-      for(var k = 0; k < res.elections.length; k++){
-        elec = $("<div />");
-        elec.addClass("election");
-        elec.attr("data-id", res.elections[k].id);
-        elec.html("<p>"+ res.elections[k].name +"  Date: "+ res.elections[k].electionDay+"</p>");
-        elec.appendTo($("#elect-date"));
-      }
-    }
-  });
-
-  $("#elect-date").on("click", ".election", function(){
-    localStorage["elecID"] = $(this).attr("data-id");
-    location.href="/map";
   });
 </script>
