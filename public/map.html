@@ -4,7 +4,6 @@
 	<title>For the People - Polling Places</title>
 	<!--jQuery Core CDN-->
 	<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
-	<!--Bootstrap CSS CDN-->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
 	<!--Leaflet CSS CDN-->
 	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css"
@@ -12,13 +11,22 @@
    crossorigin=""/>
    <!--Leaflet js CDN-->
    <script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js" integrity="sha512-lInM/apFSqyy1o6s89K4iQUKg6ppXEgsVxT35HbzUupEVRh2Eu9Wdl4tHj7dZO0s1uvplcYGmt3498TtHq+log==" crossorigin=""></script>
+   <link rel="stylesheet" href="./styles.css">
 
 	<style> .col-lg-12 { padding: 10px; margin: 5px;} .places {padding: 10px; margin: 10px; border: 2px solid #993300; background-color: white;} p{padding:10px; margin: 10px;} p:hover { color: red;} p.map {padding: 50px; border: 2px solid blue;} #voterMap {height: 40vw; width: 40vw; margin:0 auto;} body {background-color: #003366;} h3 {color: white;}</style>
 </head>
 <body>
-	<nav class="navbar navbar-light bg-light">
-  		<a class="navbar-brand" href="#">For the People</a>
-	</nav>
+	<nav class="navbar">
+        <a class="navbar-brand" href="#"><h4>For The People</h4></a>
+        <ul class="nav nav-bar justify-content-end">
+            <li class="nav-item">
+                <p class="nav-link">Welcome, user</p>
+            </li>
+            <form>
+                <button class="btn btn-outline-light my-2 my-sm-0" type="submit">Logout</button>
+            </form>
+        </ul>
+    </nav>
 	<div class="container">
 		<div class="row">
 			<div class="col-lg-12">
