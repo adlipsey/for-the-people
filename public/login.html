@@ -1,95 +1,146 @@
-<!-- <button id="googleLogin" type="button" name="button">Login</button> -->
-
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Login</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-    <!-- jQuery CDN -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-    <!-- Linking CSS -->
-    <link rel="stylesheet" href="styles.css">
+	<title></title>
+	 
+	 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+
+	 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
 </head>
 <body>
-    <section> <!-- Bills section -->
-        <div class="container" style="width: 500px; margin-top: 250px;">
-              <h4 class="list-group-item active main-color-bg">
-                Sign up
-              </h4>
-              <div class="list-group-item">
-                  <div class="signup">
-                      <p id="signup-success" class="text-success"></p>
-                      <p id="signup-error" class="text-danger"></p>
-                      <form class="signup-form form-inline" id="signup-form" role="form" onsubmit="return signup(this)">
-                          <input class="form-control" name="email" type="email" placeholder="Your email. eg., joe@acme.com" required>
-                          <button class="btn btn-success" id="signup-button" type="submit" >Submit Now</button>
-                      </form>
-                  </div>
 
-              </div>
-            </div>
-        </div>
-    </section><!-- End Bills section -->
-
-<script src="https://cdn.firebase.com/js/client/1.0.18/firebase.js"></script>
+<script src="https://www.gstatic.com/firebasejs/4.6.2/firebase.js"></script>
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyBccUXvwfVVLNXMDQOnNck5M5V-JKHqE2A",
+    authDomain: "project-2-45594.firebaseapp.com",
+    databaseURL: "https://project-2-45594.firebaseio.com",
+    projectId: "project-2-45594",
+    storageBucket: "project-2-45594.appspot.com",
+    messagingSenderId: "921855878944"
+  };
+  firebase.initializeApp(config);
+</script>
 
 <script>
-    var signupForm = document.getElementById('signup-form');
-    var signupSuccess = document.getElementById('signup-success');
-    var signupError = document.getElementById('signup-error');
-    var signupBtn = document.getElementById('signup-button');
-    var onSignupComplete = function(error) {
-      signupBtn.disabled = false;
-      if (error) {
-        signupError.innerHTML = 'Sorry. Could not signup.';
-      } else {
-        signupSuccess.innerHTML = 'Thanks for signing up!';
-        // hide the form
-        signupForm.style.display = 'none';
+	//create new connection to firebase
+	var ref= new Firebase('https://project-2-45594.firebaseio.com/');
 
-      }
+	// Sign Up 
 
-    };
-    function signup(formObj) {
-        // Store emails to firebase
-        var myFirebaseRef = new Firebase("https://project-2-45594.firebaseio.com/signups");
-        myFirebaseRef.push({
-          email: formObj.email.value,
-        }, onSignupComplete);
-        signupBtn.disabled = true;
-        return false;
+$("#signup-btn").on('click', function() 
+{
+  var name = $("#name").val();
+  var email = $("#email").val();
+  var password = $("#password").val();
+  var address = $("#address").val();
+
+  firebaseref.createUser({
+    name: name,
+    email: email,
+    password: password,
+    address: address
+
+  },function(error, userData) {
+    if (error) {
+      console.log("Error creating user:", error);
+    } 
+    else {
+      console.log("Successfully created user account with uid:", userData.uid);
+      //additionally, you can log the user in right after the signup is successful and add more data about the user like name etc.              
     }
+  });
+});
+  
+// Login
+
+$("#login-btn").on('click', function() 
+{
+        var email = $("#login-email").val();
+        var password = $("#login-password").val();
+        firebaseref.authWithPassword({
+            email: email,
+            password: password
+        }, 
+        function(error, authData) {
+            if (error) {
+                console.log("Login Failed!", error);
+            } else {
+                console.log("Authenticated successfully with payload:", authData);
+            }
+        });
+});
+
+ //Callback for Auth Changes
+var authDataCallback = function(authData) 
+{
+        //authData is the object sent by Firebase in the callback.
+        if (authData) {
+            console.log("User " + authData.uid + " is logged in");
+        } 
+        else {
+            console.log("User is logged out");
+        }
+} 
+
+  //register a callback for the change in Authentication Status
+firebaseref.onAuth(authDataCallback);
+
+//take the values from the form, and put them in an object
+  var newActivity= {
+    "name": nameToSend,
+    "email": emailToSend,
+    "password": passwordToSend,
+    "address": addressToSend
+  }
+  //put new object in data array
+  data.push(newActivity);
+  console.log(data);
+  
+    //send the new data to Firebase
+		ref.set(data, function(err){
+      if(err){
+        alert("Data no go");
+      }
+    });
+
+    return false;
+  }
+
+////Detect the authication state
+  var reg = new Firebase("https://project-2-45594.firebaseio.com");
+  reg.onAuth(function(authData){
+    console.log("info on authentication");
+    if(authData){
+      //you are logged in
+      
+    }else{
+      //you are not logged in
+      
+    }
+  })
+  //////Let a user Register in Firebase
+  //////with password/email
+  function register(email, password){
+    reg.createUser({
+      email: email,
+      password: password
+    }, function(error, userData){
+      if(error){
+        alert("You did not register");
+      }else{
+        alert("You registered"+userData.uid);
+      }
+    })
+  }
+}
+
 </script>
 
 
-<script>
-    // Send message
-    var contactFrom = document.getElementById('contact-form');
-    var contactSuccess = document.getElementById('contact-success');
-    var contactError = document.getElementById('contact-error');
-    var sendBtn = document.getElementById('send-button');
-    var onMessageComplete = function(error) {
-      sendBtn.disabled = false;
-      if (error) {
-        contactError.innerHTML = 'Sorry. Could not send message.';
-      } else {
-        contactSuccess.innerHTML = "Message has been sent.";
-        // hide the form
-        contactFrom.style.display = 'none';
-      }
-    };
-    function sendMessage(formObj) {
-        // Store emails to firebase
-        var myFirebaseRef = new Firebase("https://project-2-45594.firebaseio.com/messages");
-        myFirebaseRef.push({
-          name: formObj.name.value,
-          email: formObj.email.value,
-          message: formObj.message.value
-        }, onMessageComplete);
-        sendBtn.disabled = true;
-        return false;
-    }
-</script>
+
 
 </body>
 </html>
