@@ -12,7 +12,7 @@
     <!-- jQuery CDN -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <!-- Linking CSS -->
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="./styles.css">
 
     <style> .job { background-color: #337ab7; color: white; padding: 2px; }</style>
 
@@ -43,9 +43,10 @@
         </div>
     </header>
 
-    <section >
-        <div class="container" id="display">
-            <h4> Your voting district is <span id="district"></span> </h4>
+
+    <section id="display">
+        <div class="container">
+            <h4 id="district"> Your voting district is:  </h4>
         </div>
     </section>
 
@@ -152,7 +153,7 @@
 
   $.post("/api/main", userData).done(function(res){
     console.log(JSON.stringify(res, null, 2));
-    $("#district").text(res.district);
+    $("#district").text("Your congressional voting district is: "+ res.district);
     var natDiv;
     var statDiv;
     for(var i = 0; i< 4; i++){
