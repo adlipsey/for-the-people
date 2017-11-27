@@ -8,7 +8,7 @@
 
     <title>For the people</title>
     <!-- Bootstrap CDN -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
     <!-- jQuery CDN -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <!-- Linking CSS -->
@@ -18,19 +18,16 @@
 
 <body>
 
-    <nav class="navbar navbar-default">
-        <!-- ROW 1 NAV BAR-->
-        <div class="container">
-            <div class="navbar-header">
-                <a class="navbar-brand" href="#">For The People</a>
-            </div>
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav navbar-right">
-                    <li><a href="#">Welcome, user</a></li>
-                    <li><a href="#">Sign Out</a></li>
-                </ul>
-            </div>
-        </div>
+    <nav class="navbar">
+        <a class="navbar-brand" href="#"><h4>For The People</h4></a>
+        <ul class="nav nav-bar justify-content-end">
+            <li class="nav-item">
+                <p class="nav-link">Welcome, user</p>
+            </li>
+            <form>
+                <button class="btn btn-outline-light my-2 my-sm-0" type="submit">Logout</button>
+            </form>
+        </ul>
     </nav>
 
     <header id="header">
