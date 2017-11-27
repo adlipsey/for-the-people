@@ -96,7 +96,7 @@
                       <p class="list-group-item active main-color-bg">
                         Next Election Date
                       </p>
-                      <p id="elect-date"class="list-group-item"><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>  Fill in with dates id="elect-date" </p>
+                      <p id="elect-date" class="list-group-item"><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span></p>
                       <p class="list-group-item">
                          <span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span>
                          Link to map, or, thumbnail of map id="map"<br />
@@ -146,6 +146,7 @@
   firebase.initializeApp(config);
   var userData = {};
   userData.address = "14880 Swallow Ct Woodbridge VA 22193";
+  userData.state = "va";
 
 
     // POPULATE REPRESENTATIVES
@@ -173,5 +174,25 @@
       });
       statDiv.appendTo($("#state-rep"));
     }
+
+    //Elections
+    if(res.elections.length === 0){
+      $("#elect-date").append("<p>There are no upcoming elections</p>");
+    }
+    else{
+      var elec;
+      for(var k = 0; k < res.elections.length; k++){
+        elec = $("<div />");
+        elec.addClass("election");
+        elec.attr("data-id", res.elections[k].id);
+        elec.html("<p>"+ res.elections[k].name +"  Date: "+ res.elections[k].electionDay+"</p>");
+        elec.appendTo($("#elect-date"));
+      }
+    }
+  });
+
+  $("#elect-date").on("click", ".election", function(){
+    localStorage["elecID"] = $(this).attr("data-id");
+    location.href="/map";
   });
 </script>

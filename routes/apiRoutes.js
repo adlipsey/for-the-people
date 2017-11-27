@@ -88,7 +88,18 @@ module.exports = function(app){
 			});
 			var getDistrict = userData.posts[3].name.split("-");
 			userData.district = getDistrict[1];
-			res.json(userData);
+			url = "https://www.googleapis.com/civicinfo/v2/elections?key="+ googApiKey;
+			request(url, function(err, rsp, body){
+				userData.elections = [];
+				body = JSON.parse(body);
+				console.log(JSON.stringify(body, null, 2));
+				body.elections.forEach(function(elmnt){
+					if(elmnt.ocdDivisionId === "ocd-division/country:us" || elmnt.ocdDivisionId === "ocd-division/country:us/state:"+ userData.state){
+						userData.elections.push(elmnt);
+					}
+				});
+				res.json(userData);
+			});
 		});
 
 		
