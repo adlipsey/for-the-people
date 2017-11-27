@@ -160,7 +160,7 @@
       natDiv = $("<div class='list-group' />");
       natDiv.html("<p class='job list-group-item active'>"+ res.posts[i].name+"</p>");
       res.posts[i].ppl.forEach(function(element){
-        natDiv.append("<a href='"+res.posts[i].urls[res.posts[i].ppl.indexOf(element)]+"'><p class='list-group-item'>"+ element+"</p></a>");
+        natDiv.append("<a href='"+res.posts[i].urls[res.posts[i].ppl.indexOf(element)]+"' target='_blank'><p class='list-group-item'>"+ element+"</p></a>");
       });
       natDiv.appendTo($("#national-rep"));
     }
@@ -169,7 +169,7 @@
       statDiv = $("<div class='list-group' />");
       statDiv.html("<p class='job list-group-item active'>"+ res.posts[j].name+"</p>");
       res.posts[j].ppl.forEach(function(element){
-        statDiv.append("<a href='"+res.posts[j].urls[res.posts[j].ppl.indexOf(element)]+"'><p class='list-group-item'>"+ element+"</p></a>");
+        statDiv.append("<a href='"+res.posts[j].urls[res.posts[j].ppl.indexOf(element)]+"' target='_blank'><p class='list-group-item'>"+ element+"</p></a>");
       });
       statDiv.appendTo($("#state-rep"));
     }

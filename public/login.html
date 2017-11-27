@@ -1,146 +1,192 @@
 <!DOCTYPE html>
 <html>
+
 <head>
 	<title></title>
-	 
-	 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
 
-	 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 
 </head>
+
 <body>
+	<div class="container">
+		<form>
+			<h4>Login form</h4>
+			<div class="form-group">
+				<!-- GET EMAIL -->
+				<label for="exampleInputEmail1">Email address</label>
+				<input type="email" class="form-control" id="login-email" aria-describedby="emailHelp" placeholder="Enter email">
+				<small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+			</div>
+			<div class="form-group">
+				<!-- GET PASSWORD -->
+				<label for="exampleInputPassword1">Password</label>
+				<input type="password" class="form-control" id="login-password" placeholder="Password">
+			</div>
+			<button type="submit" class="btn btn-primary" id="login-btn">Submit</button>
+		</form>
+	</div>
 
-<script src="https://www.gstatic.com/firebasejs/4.6.2/firebase.js"></script>
-<script>
-  // Initialize Firebase
-  var config = {
-    apiKey: "AIzaSyBccUXvwfVVLNXMDQOnNck5M5V-JKHqE2A",
-    authDomain: "project-2-45594.firebaseapp.com",
-    databaseURL: "https://project-2-45594.firebaseio.com",
-    projectId: "project-2-45594",
-    storageBucket: "project-2-45594.appspot.com",
-    messagingSenderId: "921855878944"
-  };
-  firebase.initializeApp(config);
-</script>
+	<div class="container">
+			<hr />
+			<h4>Sign Up form form</h4>
+			<div class="form-group">
+				<label for="exampleInputEmail1">Email address</label>
+				<input type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Enter email">
+				<small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+			</div>
+			<div class="form-group">
+				<label for="Password">Password</label>
+				<input type="password" class="form-control" id="password" placeholder="Password">
+			</div>
+			<div class="form-group">
+				<label for="address">Name</label>
+				<input class="form-control" type="text" placeholder="Default input" id="name">
+			</div>
+			<div class="form-group">
+				<label for="address">Address</label>
+				<input class="form-control" type="text" placeholder="Default input" id="address">
+			</div>
+			<button type="submit" class="btn btn-primary" id="signup-btn">Submit</button>
+			</form>
+	</div>
 
-<script>
-	//create new connection to firebase
-	var ref= new Firebase('https://project-2-45594.firebaseio.com/');
 
-	// Sign Up 
 
-$("#signup-btn").on('click', function() 
-{
-  var name = $("#name").val();
-  var email = $("#email").val();
-  var password = $("#password").val();
-  var address = $("#address").val();
 
-  firebaseref.createUser({
-    name: name,
-    email: email,
-    password: password,
-    address: address
 
-  },function(error, userData) {
-    if (error) {
-      console.log("Error creating user:", error);
-    } 
-    else {
-      console.log("Successfully created user account with uid:", userData.uid);
-      //additionally, you can log the user in right after the signup is successful and add more data about the user like name etc.              
-    }
-  });
-});
-  
-// Login
 
-$("#login-btn").on('click', function() 
-{
-        var email = $("#login-email").val();
-        var password = $("#login-password").val();
-        firebaseref.authWithPassword({
-            email: email,
-            password: password
-        }, 
-        function(error, authData) {
-            if (error) {
-                console.log("Login Failed!", error);
-            } else {
-                console.log("Authenticated successfully with payload:", authData);
-            }
-        });
-});
 
- //Callback for Auth Changes
-var authDataCallback = function(authData) 
-{
-        //authData is the object sent by Firebase in the callback.
-        if (authData) {
-            console.log("User " + authData.uid + " is logged in");
-        } 
-        else {
-            console.log("User is logged out");
-        }
-} 
+	<!-- FIREBASE -->
+	<script src="https://www.gstatic.com/firebasejs/4.6.2/firebase.js"></script>
+	<script>
+		// Initialize Firebase
+		var config = {
+			apiKey: "AIzaSyBccUXvwfVVLNXMDQOnNck5M5V-JKHqE2A",
+			authDomain: "project-2-45594.firebaseapp.com",
+			databaseURL: "https://project-2-45594.firebaseio.com",
+			projectId: "project-2-45594",
+			storageBucket: "project-2-45594.appspot.com",
+			messagingSenderId: "921855878944"
+		};
+		firebase.initializeApp(config);
+	</script>
 
-  //register a callback for the change in Authentication Status
-firebaseref.onAuth(authDataCallback);
+	<script>
+		//create new connection to firebase
+		var ref = new Firebase('https://project-2-45594.firebaseio.com/');
 
-//take the values from the form, and put them in an object
-  var newActivity= {
-    "name": nameToSend,
-    "email": emailToSend,
-    "password": passwordToSend,
-    "address": addressToSend
-  }
-  //put new object in data array
-  data.push(newActivity);
-  console.log(data);
-  
-    //send the new data to Firebase
-		ref.set(data, function(err){
-      if(err){
-        alert("Data no go");
-      }
-    });
+		// Sign Up
 
-    return false;
-  }
+		$("#signup-btn").on('click', function() {
+			var name = $("#name").val();
+			var email = $("#email").val();
+			var password = $("#password").val();
+			var address = $("#address").val();
 
-////Detect the authication state
-  var reg = new Firebase("https://project-2-45594.firebaseio.com");
-  reg.onAuth(function(authData){
-    console.log("info on authentication");
-    if(authData){
-      //you are logged in
-      
-    }else{
-      //you are not logged in
-      
-    }
-  })
-  //////Let a user Register in Firebase
-  //////with password/email
-  function register(email, password){
-    reg.createUser({
-      email: email,
-      password: password
-    }, function(error, userData){
-      if(error){
-        alert("You did not register");
-      }else{
-        alert("You registered"+userData.uid);
-      }
-    })
-  }
-}
+			firebaseref.createUser({
+				name: name,
+				email: email,
+				password: password,
+				address: address
 
-</script>
+			}, function(error, userData) {
+				if (error) {
+					console.log("Error creating user:", error);
+				} else {
+					console.log("Successfully created user account with uid:", userData.uid);
+					//additionally, you can log the user in right after the signup is successful and add more data about the user like name etc.
+				}
+			});
+		});
+
+		// Login
+
+		$("#login-btn").on('click', function() {
+			console.log("hello");
+			var email = $("#login-email").val();
+			var password = $("#login-password").val();
+			firebaseref.authWithPassword({
+					email: email,
+					password: password
+				},
+				function(error, authData) {
+					if (error) {
+						console.log("Login Failed!", error);
+					} else {
+						console.log("Authenticated successfully with payload:", authData);
+					}
+				});
+		});
+
+		//Callback for Auth Changes
+		var authDataCallback = function(authData) {
+			//authData is the object sent by Firebase in the callback.
+			if (authData) {
+				console.log("User " + authData.uid + " is logged in");
+			} else {
+				console.log("User is logged out");
+			}
+		}
+
+		//register a callback for the change in Authentication Status
+		firebaseref.onAuth(authDataCallback);
+
+		//take the values from the form, and put them in an object
+		var newActivity = {
+			"name": nameToSend,
+			"email": emailToSend,
+			"password": passwordToSend,
+			"address": addressToSend
+		}
+		//put new object in data array
+		data.push(newActivity);
+		console.log(data);
+
+		//send the new data to Firebase
+		ref.set(data, function(err) {
+			if (err) {
+				alert("Data no go");
+			}
+		});
+
+		return false;
+		}
+
+		////Detect the authication state
+		var reg = new Firebase("https://project-2-45594.firebaseio.com");
+		reg.onAuth(function(authData) {
+			console.log("info on authentication");
+			if (authData) {
+				//you are logged in
+
+			} else {
+				//you are not logged in
+
+			}
+		})
+		//////Let a user Register in Firebase
+		//////with password/email
+		function register(email, password) {
+			reg.createUser({
+				email: email,
+				password: password
+			}, function(error, userData) {
+				if (error) {
+					alert("You did not register");
+				} else {
+					alert("You registered" + userData.uid);
+				}
+			})
+		}
+		}
+	</script>
 
 
 
 
 </body>
+
 </html>
