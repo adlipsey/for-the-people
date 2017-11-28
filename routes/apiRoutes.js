@@ -115,9 +115,6 @@ module.exports = function(app){
 				});
 			});
 		});
-
-		
-
 	});
 
 	app.post("/api/rep", function(req, res){
@@ -153,8 +150,6 @@ module.exports = function(app){
 					else{
 						content = JSON.parse(content);
 						for(var j = 0; j < content.officials.length; j++){
-							console.log(content.officials[j].name);
-							console.log(repData.name);
 							if(content.officials[j].name.split(" ").pop() === repData.name.split(" ").pop()){
 								if(content.officials[j].photoUrl){
 								repData.photo = content.officials[j].photoUrl;
@@ -170,6 +165,34 @@ module.exports = function(app){
 					
 				});
 			});
+		});
+	});
+
+	app.get("/api/bills", function (req, res){
+		console.log("get API call working");
+		reqOptions.url = "https://api.propublica.org/congress/v1/115/both/bills/active.json";
+		request(reqOptions, function(error, rsp, body){
+			var billData = [];
+			var bill;
+			body = JSON.parse(body);
+			for(var n = 0; n < 10; n++){
+				bill = {};
+				bill.num = body.results[0].bills[n].number;
+				bill.name = body.results[0].bills[n].short_title;
+				bill.sponsor = body.results[0].bills[n].sponsor_name;
+				bill.state = body.results[0].bills[n].sponsor_state;
+				bill.party = body.results[0].bills[n].sponsor_party;
+				bill.url = body.results[0].bills[n].congressdotgov_url;
+				if(body.results[0].bills[n].summary_short){
+					bill.summary = body.results[0].bills[n].summary_short;
+				}
+				else {
+					bill.summary = "No summary available";
+				}
+				bill.action = body.results[0].bills[n].latest_major_action;
+				billData.push(bill);
+			}
+			res.json(billData);
 		});
 	});
 

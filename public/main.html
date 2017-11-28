@@ -54,7 +54,7 @@
                 <div class="col-md-8">
                     <div class="panel panel-default">
                       <div class="panel-heading main-color-bg">
-                        <h3 class="panel-title">Your representatives are</h3>
+                        <h4 class="panel-title">Your Representatives</h4>
                       </div>
                       <div class="panel-body">
                         <div class="col-md-6">
@@ -90,9 +90,9 @@
                 <!-- SIDEBAR -->
                 <div class="col-md-4">
                     <div class="list-group">
-                      <p class="list-group-item active main-color-bg">
+                      <h4 class="list-group-item active main-color-bg"><span class='glyphicon glyphicon-calendar' aria-hidden='true'></span>
                         Next Election Date
-                      </p>
+                      </h4>
                       <p id="elect-date" class="list-group-item"><!--Dynamic elections go here--></p>
                       <p class="list-group-item">
                          <span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span>
@@ -109,10 +109,10 @@
     <section> <!-- Bills section -->
         <div class="container">
             <div class="list-group">
-              <h4 class="list-group-item active main-color-bg">
-                Upcomming bills
+              <h4 class="list-group-item active main-color-bg"><span class="glyphicon glyphicon-file" aria-hidden="true"></span>
+                Recently Active Bills
               </h4>
-              <div id="bills" class="list-group-item"><span class="glyphicon glyphicon-file" aria-hidden="true"></span>  Bills info goes here id="bills" </div>
+              <div id="bills" class="list-group-item"></div>
             </div>
         </div>
     </section><!-- End Bills section -->
@@ -134,7 +134,6 @@
 
     // POPULATE REPRESENTATIVES
   $.post("/api/main", userData).done(function(res){
-    console.log(JSON.stringify(res, null, 2));
     userData.district = res.district;
     $("#district").text("Your congressional voting district is: "+ res.district);
     var natDiv;
@@ -179,7 +178,7 @@
         elec = $("<div />");
         elec.addClass("election");
         elec.attr("data-id", res.elections[k].id);
-        elec.html("<a href='/map'><span class='glyphicon glyphicon-calendar' aria-hidden='true'></span> "+ res.elections[k].electionDay +": "+ res.elections[k].name+"</a>");
+        elec.html("<a href='/map'>"+ res.elections[k].electionDay +": "+ res.elections[k].name+"</a>");
         elec.appendTo($("#elect-date"));
       }
     }
@@ -191,5 +190,19 @@
 
   $("#national-rep").on("click", ".badge", function(){
     localStorage["repKey"] = $(this).attr("id");
+  });
+
+  //Bills
+  $.get("/api/bills").done(function(res){
+    var billDiv;
+    res.forEach(function(bill){
+      billDiv = $("<div />");
+      billDiv.addClass("list-group-item");
+      billDiv.append("<p>Number: "+ bill.num + " Sponsor: "+ bill.sponsor+ " State: "+ bill.state +" Party: "+ bill.party+"</p>");
+      billDiv.append("<a href='"+bill.url+"' target='_blank'><p>"+ bill.name+"</p></a>");
+      billDiv.append("<p>"+bill.summary+"</p>");
+      billDiv.append("<p> Last Major Action: "+ bill.action+"</p>");
+      billDiv.appendTo($("#bills"));
+    });
   });
 </script>
