@@ -5,17 +5,22 @@ body {
 .navbar {
     max-height: 55px !important;
     margin-bottom: 0px !important;
-    /*border-radius: 0 !important;*/
+    border-radius: 0 !important;
     background-color: #cc4c4c;
+    border: none;
     color: #eeeeee;
 }
 
 .navbar-brand{
-
-    color: #eeeeee;
+    color: #eeeeee !important;
 }
-.navbar ul{
-    padding-top: 15px;
+.navbar p{
+    color: #eeeeee !important;
+    padding-top: 15px !important;
+}
+.navbar a{
+    color: #eeeeee !important;
+    /*padding-top: 15px !important;*/
 }
 
 .navbar a:hover {

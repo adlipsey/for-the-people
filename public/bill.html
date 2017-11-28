@@ -17,18 +17,32 @@
 </head>
 
 <body>
-
-    <nav class="navbar">
-        <a class="navbar-brand" href="#"><h4>For The People</h4></a>
-        <ul class="nav nav-bar justify-content-end">
-            <li class="nav-item">
-                <p class="nav-link">Welcome, user</p>
-            </li>
-            <form>
-                <button class="btn btn-outline-light my-2 my-sm-0" type="submit">Logout</button>
-            </form>
-        </ul>
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                  </button>
+                <a class="navbar-brand" href="#">FOR THE PEOPLE</a>
+            </div>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <p id="user">Welcome, user </p>
+                </li>
+                <!-- <li><p> | </p></li> -->
+                <li><a href="#" class="dropdown-toggle">Sign Out</a></li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container-fluid -->
     </nav>
+
+
 
     <header id="header">
         <div class="container">
@@ -44,16 +58,18 @@
         </div>
     </section>
 
-    <section> <!-- Bills section -->
+    <section>
+        <!-- Bills section -->
         <div class="container">
             <div class="list-group">
-              <h4 class="list-group-item active main-color-bg">
+                <h4 class="list-group-item active main-color-bg">
                 Upcomming bills
               </h4>
-              <div id="bills" class="list-group-item"><span class="glyphicon glyphicon-file" aria-hidden="true"></span>  Bills info goes here id="bills" </div>
+                <div id="bills" class="list-group-item"><span class="glyphicon glyphicon-file" aria-hidden="true"></span> Bills info goes here id="bills" </div>
             </div>
         </div>
-    </section><!-- End Bills section -->
+    </section>
+    <!-- End Bills section -->
 
 
 
