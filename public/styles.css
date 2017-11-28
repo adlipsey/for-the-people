@@ -59,7 +59,7 @@ body {
 .image{
     background: url("./images/cap.jpg") no-repeat;
     background-size: 100%;
-    height: 700px;
+    height: 100%;
     position: fixed;
     left: 0px;
     right: 0px;
