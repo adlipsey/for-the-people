@@ -25,12 +25,12 @@
 	<div class="container" >
 		<div class="row">
 			<div class="col-lg-12" id="display">
-				<h1 id="name">Rep. Soinso Whatsername</h1>
+				<h1 id="name"></h1>
 			</div>
 		</div><!--End row-->
 		<div class="row">
 			<div class="col-lg-4">
-				<img id="photo" src="http://www.divorce.legal/wp-content/uploads/2010/10/younger-business-woman.jpg">
+				<img id="photo" src="http://garykingwebdevelopment.com/images/placeholders/team-placeholder.jpg">
 			</div>
 			<div class="col-lg-8">
 				<div class="list-group">
@@ -55,11 +55,10 @@
 				  <p class="list-group-item active main-color-bg">
 					Voting Info
 				  </p>
-				  <p id="totVotes"class="list-group-item">Total Votes: </p>
 				  <p id="missed"class="list-group-item">Percentage of Votes Missed: </p>
 				  <p id="withParty"class="list-group-item">Percentage of Votes with Party: </p>
 				  <p id="termEnd"class="list-group-item">Term End:</p>
-				  <p class="list-group-item">Commitees: </p>
+				  <p class="list-group-item active main-color-bg">Commitees: </p>
 				  <ul id="committees" class="list-group-item"></ul>
 				</div>
 
@@ -77,7 +76,8 @@
 		</div><!--End row-->
 	</div><!--End of container-->
 	<script type="text/javascript">
-		$.get("/api/rep").done(function(res){
+		var rep = {"memId": localStorage["repKey"]};
+		$.post("/api/rep", rep).done(function(res){
 			console.log(JSON.stringify(res, null, 2));
 			$("#name").text(res.title + " " + res.name);
 			$("#state").text("State: " + res.state);
@@ -91,6 +91,7 @@
 			$("#photo").attr("src", res.photo);
 			res.committees.forEach(function(element){
 				var committee = $("<li />");
+				committee.addClass("list-group-item");
 				committee.text(element.name);
 				committee.appendTo($("#committees"));
 			});
