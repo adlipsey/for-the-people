@@ -93,16 +93,11 @@
                       <p class="list-group-item active main-color-bg">
                         Next Election Date
                       </p>
-                      <p id="elect-date" class="list-group-item"><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span> </p>
+                      <p id="elect-date" class="list-group-item"><!--Dynamic elections go here--></p>
                       <p class="list-group-item">
                          <span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span>
-                         Link to map, or, thumbnail of map id="map"<br />
+                         Click an Election to view your Polling Place<br />
                       </p>
-                      <div id="map">
-                          <a href="#" class="list-group-item"><img src="http://placehold.it/150x150" alt="Placeholder" class="img-thumbnail">
-
-                          </a>
-                      </div>
                     </div>
 
                 </div> <!-- End sidebar -->
@@ -184,7 +179,7 @@
         elec = $("<div />");
         elec.addClass("election");
         elec.attr("data-id", res.elections[k].id);
-        elec.html("<p>"+ res.elections[k].electionDay +": "+ res.elections[k].name +"</p>");
+        elec.html("<a href='/map'><span class='glyphicon glyphicon-calendar' aria-hidden='true'></span> "+ res.elections[k].electionDay +": "+ res.elections[k].name+"</a>");
         elec.appendTo($("#elect-date"));
       }
     }
@@ -192,11 +187,9 @@
 
   $("#elect-date").on("click", ".election", function(){
     localStorage["elecID"] = $(this).attr("data-id");
-    location.href="/map";
   });
 
   $("#national-rep").on("click", ".badge", function(){
     localStorage["repKey"] = $(this).attr("id");
-    console.log(localStorage["repKey"]);
   });
 </script>

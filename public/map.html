@@ -55,9 +55,13 @@
 	</div><!--End of container-->
 	<script type="text/javascript">
 	$(document).ready(function(){
+		var mapData = {
+			"elec": localStorage["elecID"],
+			"address": "14880 Swallow Ct Woodbridge VA 22193"
+		};
 		var mymap;
 		//http request to get user address from DB
-		$.get("/api/map").done(function(res){
+		$.post("/api/map", mapData).done(function(res){
 			//Center map on user's geocoded address
 			mymap = L.map("voterMap").setView(res.geocode, 15);
 			//OpenStreetMap tile layer so it looks pretty
@@ -70,7 +74,7 @@
 			user.bindPopup(res.address + "<br>Your Home");
 		}).done( function(){
 			//
-			$.get("/api/polls").done(function(resp){
+			$.post("/api/polls", mapData).done(function(resp){
 				var poll = L.marker(resp.address.geo).addTo(mymap);
 				poll.bindPopup(resp.address.locationName);
 				$(".loc-name").html(resp.address.locationName);
