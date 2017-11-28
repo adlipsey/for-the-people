@@ -67,9 +67,8 @@ body {
     padding: 5px 60px 5px 60px;
     color: #ffffff;
     font-family: 'Open Sans Condensed', sans-serif;
-    margin-top: 350px;
-    position: fixed;
-    z-index: 2;
+    margin-top: 10%;
+    
 }
 .image{
     background: url("./images/cap.jpg") no-repeat;
@@ -93,7 +92,7 @@ body {
 
 #main-submit{
     width: 500px;
-    margin-top: 500px;
+    margin-top: 10%;
     text-align: center;
 }
 
