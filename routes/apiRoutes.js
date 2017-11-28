@@ -25,12 +25,11 @@ module.exports = function(app){
 		res.json(friends.findFriend(newFriend));
 	});*/
 
-	var userAddress = "14880 Swallow Ct Woodbridge VA 22193";
 	var googApiKey = "AIzaSyBDBQQzdDurAqr7Ve-KKpKTrdVKb5oDO7s";
 
-	app.get("/api/map", function(req, res){
+	app.post("/api/map", function(req, res){
+		var userAddress = req.body.address;
 		//Replace with post request pulling address data from database
-		var userAddress = "14880 Swallow Ct Woodbridge VA 22193";
 		var response = {};
 		var lat;
 		var long;
@@ -45,9 +44,11 @@ module.exports = function(app){
 		});
 	});
 
-	app.get("/api/polls", function(req, res){
+	app.post("/api/polls", function(req, res){
+		var userAddress = req.body.address;
+		var elecID = req.body.elec;
 		userAddress = userAddress.replace(/ /g, '+');
-		var url = "https://www.googleapis.com/civicinfo/v2/voterinfo?address="+ userAddress +"&electionId=2000&returnAllAvailableData=true&key=" + googApiKey;
+		var url = "https://www.googleapis.com/civicinfo/v2/voterinfo?address="+ userAddress +"&electionId="+elecID+"&returnAllAvailableData=true&key=" + googApiKey;
 		request(url, function(err, resp, body){
 			body = JSON.parse(body);
 			var pollInfo = body.pollingLocations[0];
