@@ -92,13 +92,26 @@ module.exports = function(app){
 			request(url, function(err, rsp, body){
 				userData.elections = [];
 				body = JSON.parse(body);
-				console.log(JSON.stringify(body, null, 2));
 				body.elections.forEach(function(elmnt){
 					if(elmnt.ocdDivisionId === "ocd-division/country:us" || elmnt.ocdDivisionId === "ocd-division/country:us/state:"+ userData.state){
 						userData.elections.push(elmnt);
 					}
 				});
-				res.json(userData);
+				reqOptions.url="https://api.propublica.org/congress/v1/members/senate/"+userData.state+"/current.json"
+				request(reqOptions, function(err, risp, content){
+					userData.senate = [];
+					content = JSON.parse(content);
+					content.results.forEach(function(elumint){
+						userData.senate.push([elumint.last_name, elumint.id]);
+					});
+					reqOptions.url="https://api.propublica.org/congress/v1/members/house/"+userData.state+"/"+userData.district+"/current.json";
+					request(reqOptions, function(err, rusp, text){
+						userData.house = [];
+						text = JSON.parse(text);
+						userData.house.push([text.results[0].last_name, text.results[0].id]);
+						res.json(userData);
+					});
+				});
 			});
 		});
 
@@ -106,11 +119,12 @@ module.exports = function(app){
 
 	});
 
-	app.get("/api/rep", function(req, res){
+	app.post("/api/rep", function(req, res){
+		repID = req.body;
 		//Creates object for rep data to be stored and passed to front end
 		var repData = {};
 		//Replace member id at end of url with member id from post request
-		reqOptions.url = "https://api.propublica.org/congress/v1/members/W000802.json";
+		reqOptions.url = "https://api.propublica.org/congress/v1/members/"+repID.memId+".json";
 		request(reqOptions, function(err, resp, body){
 			body = JSON.parse(body);
 			repData.memID = body.results[0].member_id;
@@ -138,14 +152,21 @@ module.exports = function(app){
 					else{
 						content = JSON.parse(content);
 						for(var j = 0; j < content.officials.length; j++){
-							if(content.officials[j].name === repData.name){
+							console.log(content.officials[j].name);
+							console.log(repData.name);
+							if(content.officials[j].name.split(" ").pop() === repData.name.split(" ").pop()){
+								if(content.officials[j].photoUrl){
 								repData.photo = content.officials[j].photoUrl;
 								res.json(repData);
+								}
+								else{
+									repData.photo = "http://garykingwebdevelopment.com/images/placeholders/team-placeholder.jpg"
+									res.json(repData);
+								}
 							}
 						}
-						repData.photo = "http://garykingwebdevelopment.com/images/placeholders/team-placeholder.jpg"
-						res.json(repData);
 					}
+					
 				});
 			});
 		});

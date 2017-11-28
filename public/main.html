@@ -35,7 +35,7 @@
     <header >
         <div class="container" id="header">
             <div class="row">
-                <h1 id="user-name"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> "Omar Leiva"</h1>
+                <h1 id="user-name"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>Welcome</h1>
             </div>
         </div>
     </header>
@@ -93,7 +93,7 @@
                       <p class="list-group-item active main-color-bg">
                         Next Election Date
                       </p>
-                      <p id="elect-date"class="list-group-item"><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>  Fill in with dates id="elect-date" </p>
+                      <p id="elect-date" class="list-group-item"><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span> </p>
                       <p class="list-group-item">
                          <span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span>
                          Link to map, or, thumbnail of map id="map"<br />
@@ -128,21 +128,13 @@
 
 </html>
 
-<!-- Copy and paste the snippet below at the bottom of your HTML, before other script tags -->
-<script src="https://www.gstatic.com/firebasejs/4.6.2/firebase.js"></script>
+
 <script>
-  // Initialize Firebase
-  var config = {
-    apiKey: "AIzaSyBccUXvwfVVLNXMDQOnNck5M5V-JKHqE2A",
-    authDomain: "project-2-45594.firebaseapp.com",
-    databaseURL: "https://project-2-45594.firebaseio.com",
-    projectId: "project-2-45594",
-    storageBucket: "",
-    messagingSenderId: "921855878944"
-  };
-  firebase.initializeApp(config);
+
+  //Temp hardcoded userdata until DB works
   var userData = {};
   userData.address = "14880 Swallow Ct Woodbridge VA 22193";
+  userData.state = "va";
 
 
     // POPULATE REPRESENTATIVES
@@ -157,7 +149,18 @@
       natDiv = $("<div class='list-group' />");
       natDiv.html("<p class='job list-group-item active'>"+ res.posts[i].name+"</p>");
       res.posts[i].ppl.forEach(function(element){
-        natDiv.append("<a href='"+res.posts[i].urls[res.posts[i].ppl.indexOf(element)]+"' target='_blank'><p class='list-group-item'>"+ element+"</p></a>");
+        if(element.split(" ").pop() === res.senate[0][0]){
+          natDiv.append("<p class='list-group-item'><a href='"+res.posts[i].urls[res.posts[i].ppl.indexOf(element)]+"' target='_blank'>"+ element+"</a><a href='/rep' id='"+res.senate[0][1]+"' class='badge badge-info'>More</a></p>");
+        }
+        else if(element.split(" ").pop() === res.senate[1][0]){
+          natDiv.append("<p class='list-group-item'><a href='"+res.posts[i].urls[res.posts[i].ppl.indexOf(element)]+"' target='_blank'>"+ element+"</a><a href='/rep' id='"+res.senate[1][1]+"' class='badge badge-info'>More</a></p>");
+        }
+        else if(element.split(" ").pop() === res.house[0][0]){
+          natDiv.append("<p class='list-group-item'><a href='"+res.posts[i].urls[res.posts[i].ppl.indexOf(element)]+"' target='_blank'>"+ element+"</a><a href='/rep' id='"+res.house[0][1]+"' class='badge badge-info'>More</a></p>");
+        }
+        else{
+        natDiv.append("<p class='list-group-item'><a href='"+res.posts[i].urls[res.posts[i].ppl.indexOf(element)]+"' target='_blank'>"+ element+"</a></p>");
+        }
       });
       natDiv.appendTo($("#national-rep"));
     }
@@ -166,9 +169,34 @@
       statDiv = $("<div class='list-group' />");
       statDiv.html("<p class='job list-group-item active'>"+ res.posts[j].name+"</p>");
       res.posts[j].ppl.forEach(function(element){
-        statDiv.append("<a href='"+res.posts[j].urls[res.posts[j].ppl.indexOf(element)]+"' target='_blank'><p class='list-group-item'>"+ element+"</p></a>");
+        statDiv.append("<p class='list-group-item'><a href='"+res.posts[j].urls[res.posts[j].ppl.indexOf(element)]+"' target='_blank'>"+ element+"</a></p>");
       });
       statDiv.appendTo($("#state-rep"));
     }
+
+     //Elections
+    if(res.elections.length === 0){
+      $("#elect-date").append("<p>There are no upcoming elections</p>");
+    }
+    else{
+      var elec;
+     for(var k = 0; k < res.elections.length; k++){
+        elec = $("<div />");
+        elec.addClass("election");
+        elec.attr("data-id", res.elections[k].id);
+        elec.html("<p>"+ res.elections[k].electionDay +": "+ res.elections[k].name +"</p>");
+        elec.appendTo($("#elect-date"));
+      }
+    }
+  });
+
+  $("#elect-date").on("click", ".election", function(){
+    localStorage["elecID"] = $(this).attr("data-id");
+    location.href="/map";
+  });
+
+  $("#national-rep").on("click", ".badge", function(){
+    localStorage["repKey"] = $(this).attr("id");
+    console.log(localStorage["repKey"]);
   });
 </script>
