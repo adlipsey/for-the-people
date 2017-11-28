@@ -118,11 +118,11 @@ module.exports = function(app){
 	});
 
 	app.post("/api/rep", function(req, res){
-		repID = req.body;
+		var userData = req.body;
 		//Creates object for rep data to be stored and passed to front end
 		var repData = {};
 		//Replace member id at end of url with member id from post request
-		reqOptions.url = "https://api.propublica.org/congress/v1/members/"+repID.memId+".json";
+		reqOptions.url = "https://api.propublica.org/congress/v1/members/"+userData.memId+".json";
 		request(reqOptions, function(err, resp, body){
 			body = JSON.parse(body);
 			repData.memID = body.results[0].member_id;
@@ -142,7 +142,7 @@ module.exports = function(app){
 			request(reqOptions, function(eror, rsp, text){
 				text = JSON.parse(text);
 				repData.votes = text.results[0].votes;
-				var url = "https://www.googleapis.com/civicinfo/v2/representatives?address="+userAddress+"&key="+googApiKey;
+				var url = "https://www.googleapis.com/civicinfo/v2/representatives?address="+userData.address+"&key="+googApiKey;
 				request(url, function(error, rsp, content){
 					if(error){
 						console.log(error);
@@ -169,7 +169,6 @@ module.exports = function(app){
 	});
 
 	app.get("/api/bills", function (req, res){
-		console.log("get API call working");
 		reqOptions.url = "https://api.propublica.org/congress/v1/115/both/bills/active.json";
 		request(reqOptions, function(error, rsp, body){
 			var billData = [];

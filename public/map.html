@@ -25,15 +25,15 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                   </button>
-                <a class="navbar-brand" href="#">FOR THE PEOPLE</a>
+                <a class="navbar-brand" href="/home">FOR THE PEOPLE</a>
             </div>
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right">
                 <li>
-                    <p id="user">Welcome, user </p>
+                    <p id="user">Election Map</p>
                 </li>
                 <!-- <li><p> | </p></li> -->
-                <li><a href="#" class="dropdown-toggle">Sign Out</a></li>
+                <li></li>
             </ul>
         </div>
         <!-- /.navbar-collapse -->
@@ -69,10 +69,9 @@
 	</div><!--End of container-->
 	<script type="text/javascript">
 	$(document).ready(function(){
-		var mapData = {
-			"elec": localStorage["elecID"],
-			"address": "14880 Swallow Ct Woodbridge VA 22193"
-		};
+		var mapData = JSON.parse(localStorage["userFTP"]);
+		mapData.elec = localStorage["elecID"];
+
 		var mymap;
 		//http request to get user address from DB
 		$.post("/api/map", mapData).done(function(res){

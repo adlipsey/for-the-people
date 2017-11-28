@@ -19,15 +19,15 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                   </button>
-                <a class="navbar-brand" href="#">FOR THE PEOPLE</a>
+                <a class="navbar-brand" href="/home">FOR THE PEOPLE</a>
             </div>
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right">
                 <li>
-                    <p id="user">Welcome, user </p>
+                    <p id="user">Congressperson Bio</p>
                 </li>
                 <!-- <li><p> | </p></li> -->
-                <li><a href="#" class="dropdown-toggle">Sign Out</a></li>
+                <li></li>
             </ul>
         </div>
         <!-- /.navbar-collapse -->
@@ -90,9 +90,10 @@
 		</div><!--End row-->
 	</div><!--End of container-->
 	<script type="text/javascript">
-		var rep = {"memId": localStorage["repKey"]};
-		$.post("/api/rep", rep).done(function(res){
-			console.log(JSON.stringify(res, null, 2));
+		var userData = JSON.parse(localStorage["userFTP"]);
+		userData.memId = localStorage["repKey"];
+
+		$.post("/api/rep", userData).done(function(res){
 			$("#name").text(res.title + " " + res.name);
 			$("#state").text("State: " + res.state);
 			$("#party").text("Party: " + res.party);
