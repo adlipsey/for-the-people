@@ -12,10 +12,11 @@
    <!--Leaflet js CDN-->
    <script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js" integrity="sha512-lInM/apFSqyy1o6s89K4iQUKg6ppXEgsVxT35HbzUupEVRh2Eu9Wdl4tHj7dZO0s1uvplcYGmt3498TtHq+log==" crossorigin=""></script>
    <link rel="stylesheet" href="./styles.css">
-
-	<style> .col-lg-12 { padding: 10px; margin: 5px;} .places {padding: 10px; margin: 10px; border: 2px solid #993300; background-color: white;} p{padding:10px; margin: 10px;} p:hover { color: red;} p.map {padding: 50px; border: 2px solid blue;} #voterMap {height: 40vw; width: 40vw; margin:0 auto;} body {background-color: #003366;} h3 {color: white;}</style>
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
-<body>
+
+
+<body id="mapbody">
 	<nav class="navbar navbar-default">
         <div class="container-fluid">
             <div class="navbar-header">
@@ -25,15 +26,12 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                   </button>
-                <a class="navbar-brand" href="/home">FOR THE PEOPLE</a>
+
+                <a class="navbar-brand" href="#"><i class="fa fa-empire" style="font-size:25px;color:white"></i>  FOR THE PEOPLE</a>
             </div>
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right">
-                <li>
-                    <p id="user">Election Map</p>
-                </li>
-                <!-- <li><p> | </p></li> -->
-                <li></li>
+                <li><a href="#" class="dropdown-toggle">Sign Out</a></li>
             </ul>
         </div>
         <!-- /.navbar-collapse -->
@@ -43,27 +41,35 @@
 
 	<div class="container">
 		<div class="row">
-			<div class="col-lg-12">
+			<div class="col-lg-12" id="col-lg-12">
 				<div  class="text-center" id="voterMap">
 				</div>
 			</div><!--End col-->
 		</div><!--End of row-->
 		<div class="row">
-			<div class="col-lg-12" id="list">
-				<h3>Designated Polling Place</h3>
-				<div class="places">
-					<div class="row">
-						<div class="col-lg-3">
-							<p class="loc-name">Name of place</p>
-						</div>
-						<div class="col-lg-6">
-							<p class="loc-add">Address</p>
-						</div>
-						<div class="col-lg-3">
-							<p class="loc-hours">Hours</p>
-						</div>
+			<div class="col-lg-12" id="col-lg-12" id="list">
+				<div class="panel panel-default">
+				  <div class="panel-heading main-color-bg">
+					<h3 class="panel-title"><span class="glyphicon glyphicon-ok-circle" aria-hidden="true"></span> Designated Polling Place</h3>
+				  </div>
+				  <div class="panel-body">
+					<div>
+						<div class="places">
+							<div class="row">
+								<div class="col-lg-3">
+									<p class="loc-name">Name of place</p>
+								</div>
+								<div class="col-lg-6">
+									<p class="loc-add">Address</p>
+								</div>
+								<div class="col-lg-3">
+									<p class="loc-hours">Hours</p>
+								</div>
+							</div>
+						</div><!--End of place entry-->
 					</div>
-				</div><!--End of place entry-->
+				  </div>
+				</div>
 			</div><!--End col #list-->
 		</div><!--End of row-->
 	</div><!--End of container-->

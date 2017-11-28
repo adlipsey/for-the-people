@@ -57,7 +57,7 @@ body {
 
 /*Landing page*/
 .image{
-    background: url("./images/flag.jpg") no-repeat;
+    background: url("./images/cap.jpg") no-repeat;
     background-size: 100%;
     height: 700px;
     position: fixed;
@@ -65,7 +65,7 @@ body {
     right: 0px;
     z-index: -1;
     filter: blur(5px);
-    -webkit-filter: blur(15px);
+    -webkit-filter: blur(0px);
 }
 
 .heading h1{
@@ -78,8 +78,90 @@ body {
 
 #main-submit{
     width: 500px;
-    margin-top: 250px;
+    margin-top: 450px;
     text-align: center;
 }
 
+#main-submit .btn {
+    background-color: #ca4f4f;
+    color: #eeeeee;
+    width: 150px;
+    border-radius: 15px;
+}
+/*Modal*/
+.modal-header{
+    background-color: #ca4f4f;
+    color: #eeeeee;
+
+}
+#myModalLabel{
+    font-size: 30px;
+    text-align: center;
+}
+
+.signup {
+    background-color: #09324B;
+    color: #eeeeee;
+    /*padding: 25px;*/
+}
+
+.signup label{
+    font-size: 20px;
+    padding: 10px;
+}
+
+
+#signup-btn{
+    background-color: #ca4f4f;
+    color: #eeeeee;
+    font-size: 20px;
+    padding: 15px;
+}
+
+.signup{
+    padding: 15px;
+}
+
 /*End landing page*/
+
+/*Main page*/
+.job {
+
+    /*padding: 0px;*/
+}
+
+/*Map Page*/
+#col-lg-12 {
+    padding: 10px;
+    margin: 5px;
+}
+.places{
+    /*padding: 10px;*/
+    margin: 10px;
+    /*border: 2px solid #993300;*/
+    background-color: white;
+}
+
+/*.places p{
+    padding:0px;
+    margin: 0px;
+}*/
+/*.places p:hover {
+    color: red;
+}*/
+.places p.map {
+    padding: 50px;
+    border: 2px solid blue;
+}
+#voterMap {
+    height: 40vw;
+    width: 40vw;
+    margin:0 auto;
+}
+#mapbody {
+    background-color: #f4f4f4;
+}
+h3 {
+    color: white;
+}
+/*End Map Page*/
