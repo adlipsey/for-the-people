@@ -56,6 +56,21 @@ body {
 }
 
 /*Landing page*/
+#font {
+    font-family: 'Lobster', cursive;
+}
+#appDescription{
+    font-size: 20px;
+    background-color: rgba(8, 26, 38, .6);
+    text-align: center;
+    margin-top: 10px;
+    padding: 5px 60px 5px 60px;
+    color: #ffffff;
+    font-family: 'Open Sans Condensed', sans-serif;
+    margin-top: 350px;
+    position: fixed;
+    z-index: 2;
+}
 .image{
     background: url("./images/cap.jpg") no-repeat;
     background-size: 100%;
@@ -78,7 +93,7 @@ body {
 
 #main-submit{
     width: 500px;
-    margin-top: 450px;
+    margin-top: 500px;
     text-align: center;
 }
 
