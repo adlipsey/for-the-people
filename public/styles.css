@@ -63,16 +63,15 @@ body {
     font-size: 20px;
     background-color: rgba(8, 26, 38, .6);
     text-align: center;
-    margin-top: 10px;
     padding: 10px 60px 10px 60px;
     color: #ffffff;
     font-family: 'Open Sans Condensed', sans-serif;
-    margin-top: 25%;
+    margin-top: 55vh;
     
 }
 .image{
-    background: url("./images/cap.jpg") no-repeat;
-    background-size: 100%;
+    background: url("./images/cap.jpg") center no-repeat;
+    background-size: cover;
     height: 100%;
     position: fixed;
     left: 0px;
